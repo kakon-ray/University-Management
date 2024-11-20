@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import { StudentServices } from './student.service'
-import Join from 'Joi'
+import { z } from 'zod'
 import studentValidationSchema from './students.validation'
 
 const createStudent = async (req: Request, res: Response) => {
@@ -9,27 +9,20 @@ const createStudent = async (req: Request, res: Response) => {
 
     const { student } = req.body
 
-    const { error, value } = studentValidationSchema.validate(student)
+    // data validation useing zod
 
-    const result = await StudentServices.createStudentIntoDB(value)
+    const zodParseData = studentValidationSchema.parse(student)
 
-    if (error) {
-      res.status(500).json({
-        success: false,
-        message: 'Student is Creation Faild!',
-        error: error.details,
-      })
-    }
-
+    const result = await StudentServices.createStudentIntoDB(zodParseData)
     res.status(200).json({
       success: true,
       message: 'Student is Created Successfully!',
       data: result,
     })
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({
       success: false,
-      message: 'Something went wrong!',
+      message: error.message || 'Something went wrong!',
       data: error,
     })
   }
@@ -66,8 +59,27 @@ const getSingleStudents = async (req: Request, res: Response) => {
   }
 }
 
+const deleteStudents = async (req: Request, res: Response) => {
+  try {
+    const studentId = req.params.studentId
+    const result = await StudentServices.deleteStudentFromDB(studentId)
+    res.status(200).json({
+      success: true,
+      message: 'Student Delete Successfully!',
+      data: result,
+    })
+  } catch (error) {
+    res.status(200).json({
+      success: true,
+      message: 'Student not found',
+      data: error,
+    })
+  }
+}
+
 export const studentController = {
   createStudent,
   getAllStudents,
   getSingleStudents,
+  deleteStudents,
 }

@@ -1,11 +1,25 @@
 import express, { Request, Response } from 'express'
 import { StudentServices } from './student.service'
+import Join from 'Joi'
+import studentValidationSchema from './students.validation'
 
 const createStudent = async (req: Request, res: Response) => {
   try {
+    // cerating a schema validation
+
     const { student } = req.body
 
-    const result = await StudentServices.createStudentIntoDB(student)
+    const { error, value } = studentValidationSchema.validate(student)
+
+    const result = await StudentServices.createStudentIntoDB(value)
+
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: 'Student is Creation Faild!',
+        error: error.details,
+      })
+    }
 
     res.status(200).json({
       success: true,

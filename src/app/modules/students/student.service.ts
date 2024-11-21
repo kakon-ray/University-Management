@@ -48,8 +48,8 @@ const deleteStudentFromDB = async (studentId: string) => {
 const updateStudentFromDB = async (student: TStudent) => {
 
   try{
-
-    const result = await Student.findByIdAndUpdate(student.id,{
+   const id = student.id
+    const result = await Student.updateMany({id:id},{
       email:student.email,
       'name.firstName':student.name.firstName,
       'name.middleName':student.name.middleName,

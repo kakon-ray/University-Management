@@ -45,10 +45,33 @@ const deleteStudentFromDB = async (studentId: string) => {
     console.log('Student not found')
   }
 }
+const updateStudentFromDB = async (student: TStudent) => {
+
+  try{
+
+    const result = await Student.findByIdAndUpdate(student.id,{
+      email:student.email,
+      'name.firstName':student.name.firstName,
+      'name.middleName':student.name.middleName,
+      'name.lastName':student.name.lastName
+    },{ new: true })
+
+    if(!result){
+      console.log('Student Not Found')
+    }
+
+    return result;
+
+  }catch(error){
+     console.log(error)
+     throw error
+  }
+}
 
 export const StudentServices = {
   createStudentIntoDB,
   getAllStudentFromDB,
   getSingleStudentFromDB,
   deleteStudentFromDB,
+  updateStudentFromDB,
 }

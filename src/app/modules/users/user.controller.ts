@@ -1,26 +1,30 @@
 import { UserValidation } from './user.validation'
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import { z } from 'zod'
 import { UserServices } from './user.service'
+import sendResponse from '../../utils/sendResponse'
+import { StatusCodes } from 'http-status-codes'
 
-const createStudent = async (req: Request, res: Response) => {
+const createStudent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     // cerating a schema validation
 
     const student = req.body
 
     const result = await UserServices.createStudentIntoDB(student)
-    res.status(200).json({
+    // utility response function
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
       success: true,
-      message: 'Student is Created Successfully!',
+      message: 'Student Created Successfully',
       data: result,
     })
-  } catch (error: any) {
-    res.status(500).json({
-      success: false,
-      message: error.message || 'Something went wrong!',
-      data: error,
-    })
+  } catch (error) {
+    next(error)
   }
 }
 

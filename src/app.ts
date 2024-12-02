@@ -4,6 +4,7 @@ import { StudentRoutes } from './app/modules/students/student.route'
 import { UserRoutes } from './app/modules/users/user.route'
 import globalErrorHandler from './app/middlware/globalErrorHandler'
 import notFound from './app/middlware/notFound'
+import router from './app/routes'
 
 const app: Application = express()
 
@@ -12,15 +13,17 @@ const app: Application = express()
 app.use(express.json())
 app.use(cors())
 
-app.use('/api/v1/students', StudentRoutes)
-app.use('/api/v1/users', UserRoutes)
-
-app.get('/', (req: Request, res: Response) => {
+// test route
+const testRoute = (req: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Done',
   })
-})
+}
+app.get('/', testRoute)
+
+// main route
+app.use('/api/v1', router)
 
 // 404 Route handler for unmatched or not found routes
 app.use(notFound)

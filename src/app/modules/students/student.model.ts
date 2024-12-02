@@ -7,8 +7,8 @@ import {
   TStudent,
   TUserName,
   StudentModel,
-} from './students/student.interface'
-import config from '../config'
+} from './student.interface'
+import config from '../../config/index'
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -87,6 +87,13 @@ const localGuardian = new Schema<LocalGuardian>({
 const studentSchema = new Schema<TStudent, StudentModel>(
   {
     id: { type: String, required: [true, 'Id is required'], unique: true },
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'Id is required'],
+      unique: true,
+      ref: 'User',
+    },
+
     password: {
       type: String,
       required: [true, 'Password is required'],
@@ -146,11 +153,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     },
 
     profileImage: { type: String },
-    isActice: {
-      type: String,
-      enum: ['active', 'blocked'],
-      default: 'active',
-    },
+
     isDeleted: {
       type: Boolean,
       default: false,

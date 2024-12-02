@@ -3,10 +3,8 @@ import { studentController } from './student.controller'
 
 const router = express.Router()
 
-router.post('/create-student', studentController.createStudent)
 router.get('/student-get', studentController.getAllStudents)
 router.get('/:studentId', studentController.getSingleStudents)
 router.delete('/:studentId', studentController.deleteStudents)
-router.put('/update-student', studentController.updateStudents)
 
 export const StudentRoutes = router

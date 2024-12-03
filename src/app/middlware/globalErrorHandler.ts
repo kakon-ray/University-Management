@@ -7,12 +7,12 @@ const globalErrorHandler = (
   next: NextFunction,
 ) => {
   const statusCode = err.status || 500
-  const message = err.message || 'An unexpected error occurred!'
+  const message = err?.message || 'An unexpected error occurred!'
 
   if (err.stack) {
     console.error(err.stack)
   }
-
+  // console.error(err)
   res.status(statusCode).json({
     success: false,
     message,

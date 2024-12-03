@@ -1,8 +1,6 @@
 import { model, Schema } from 'mongoose'
 import { TAcademicSemester } from './academicSemester.interface'
 import { AcamedicSemesterCode, AcamedicSemesterName, Months } from './academicSemester.constant'
-import { string } from 'zod'
-
 
 
 const academicSemesterSchema = new Schema<TAcademicSemester>(
@@ -42,6 +40,21 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
     timestamps: true,
   },
 )
+
+
+// Pre hook validation (database same year er ekoi name duita semester create hote dibe na)
+academicSemesterSchema.pre('save', async function(next){
+  const isSemesterExists = await AcademicSemester.findOne({
+    year:this.year,
+    name: this.name,
+  })
+
+  if(isSemesterExists){
+    throw new Error('Semester is already exists')
+  }
+
+  next()
+})
 
 
 export const AcademicSemester = model<TAcademicSemester>('AcademicSemester', academicSemesterSchema)

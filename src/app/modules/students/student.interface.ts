@@ -29,7 +29,7 @@ export type TStudent = {
   name: TUserName
   gender: 'male' | 'female' | 'Other'
   email: string
-  dateOfBirth?: string
+  dateOfBirth?: Date
   contactNo: string
   emerganceyContactNo: string
   bloodGroop?: 'A+' | 'B+' | 'O+' | 'A-' | 'B-'

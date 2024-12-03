@@ -113,7 +113,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
         message: 'Please Enter a Valid Email',
       },
     },
-    dateOfBirth: String,
+    dateOfBirth: {type:Date},
     contactNo: {
       type: String,
       required: [true, 'Contact No is required'],

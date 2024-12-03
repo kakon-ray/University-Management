@@ -51,9 +51,9 @@ export const createStudentValidationSchema = z.object({
       .string()
       .email('Please enter a valid email')
       .min(1, 'Email is required'),
-    dateOfBirth: z.string().optional(),
+    dateOfBirth: z.date().optional(),
     contactNo: z.string().min(1, 'Contact No is required'),
-    emerganceyContactNo: z.string().min(1, 'Emergency Contact No is required'),
+    emerganceyContactNo: z.string().min(11, 'Emergency Contact No is required'),
     bloodGroop: z.enum(['A+', 'B+', 'O+', 'A-', 'B-'], {
       errorMap: () => ({ message: 'Invalid Blood Group' }),
     }),

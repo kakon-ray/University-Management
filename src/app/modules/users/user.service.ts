@@ -10,7 +10,7 @@ const createStudentIntoDB = async (studentData: TStudent) => {
   const userData: Partial<TUser> = {
     password: studentData.password || (config.default_password as string),
     role: 'student',
-    id: '202301111',
+    id: studentData.id || '202301111',
   }
 
   try {

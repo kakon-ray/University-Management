@@ -1,6 +1,6 @@
-import { Date } from "mongoose";
+import { Date } from 'mongoose'
 
-export type TMonths = 
+export type TMonths =
   | 'January'
   | 'February'
   | 'March'
@@ -12,20 +12,20 @@ export type TMonths =
   | 'September'
   | 'October'
   | 'November'
-  | 'December';
+  | 'December'
 
-  export type TAcademicaSemesterName =  'Autumn' | 'Sammar' | 'Fall';
+export type TAcademicaSemesterName = 'Autumn' | 'Sammar' | 'Fall'
 
-  export type TAcademicaSemesterCode =  '01' | '02' | '03';
+export type TAcademicaSemesterCode = '01' | '02' | '03'
 
- export type TAcademicSemesterNameCodeMapper = {
-    [key:string] : string
-  }
+export type TAcademicSemesterNameCodeMapper = {
+  [key: string]: string
+}
 
 export type TAcademicSemester = {
-    name: TAcademicaSemesterName,
-    year : string,
-    code: TAcademicaSemesterCode,
-    startMonth : TMonths,
-    endMonth : TMonths
+  name: TAcademicaSemesterName
+  year: string
+  code: TAcademicaSemesterCode
+  startMonth: TMonths
+  endMonth: TMonths
 }

@@ -15,12 +15,24 @@ const findLastStudent = async () => {
     .lean()
 
   // 202401 0001
-  return lastStudent?.id ? lastStudent?.id.substring(6) : undefined
+  return lastStudent?.id ? lastStudent?.id : undefined
 }
 
 // getnerate student id
 export const generateStudentId = async (payload: TAcademicSemester) => {
-  const currentID = (await findLastStudent()) || (0).toString()
+  let currentID =  (0).toString() // by default
+  const lastStudentId = await findLastStudent()
+  //2030 01 0001
+  const lastStudentSemesterCode = lastStudentId?.substring(4,6);
+  const lastStudentYear = lastStudentId?.substring(0,4)
+
+  const currentSemesterCode = payload.code
+  const currentYear = payload.year
+
+  if(lastStudentId && lastStudentSemesterCode === currentSemesterCode &&  lastStudentYear === currentYear){
+    currentID = lastStudentId.substring(6)
+  }
+
   let incrementID = (Number(currentID) + 1).toString().padStart(4, '0')
   incrementID = `${payload.year}${payload.code}${incrementID}`
   return incrementID

@@ -23,7 +23,7 @@ const getAcademicSemesterFromDB = async () => {
   return academicSemester
 }
 const getSingleAcademicSemesterFromDB = async (id: string) => {
-  const academicSemester = await AcademicSemester.find({ _id: id })
+  const academicSemester = await AcademicSemester.findOne({ _id: id })
   return academicSemester
 }
 

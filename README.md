@@ -31,7 +31,7 @@
 "contactNo": "02233445566",
 "address": "789 Oak Street, Springfield"
 },
-"admissionSemester": "674f9b2bd0651220cc430c11",
+"admissionSemester": "674fa6c991902589735b3556",
 "profileImage": "https://example.com/profile-image.jpg"
 }
 
@@ -58,3 +58,11 @@
 # http://localhost:5000/api/v1/academic-semester/get
 
 # http://localhost:5000/api/v1/academic-semester/get/674f83da735221c8085f0a38
+
+# http://localhost:5000/api/v1/academic-faculty/create
+
+{
+  "name": "John Doe"
+}
+
+# http://localhost:5000/api/v1/academic-faculty/get

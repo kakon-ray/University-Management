@@ -66,3 +66,13 @@
 }
 
 # http://localhost:5000/api/v1/academic-faculty/get
+
+# http://localhost:5000/api/v1/academic-faculty/get/67500d26d9bf0f4b2c9cc218
+
+# {{ph-local-url}}/academic-faculty/update/675014aa751883d502ec975a
+
+{
+  "name": "John Doe"
+}
+
+

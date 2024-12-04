@@ -1,5 +1,40 @@
 ### All api and request json data
 
+# http://localhost:5000/api/v1/users/create-student
+
+{
+"password": "SecurePass123",
+"name": {
+"firstName": "John",
+"middleName": "Michael",
+"lastName": "Doe"
+},
+"gender": "male",
+"email": "john.doe@example.com",
+"dateOfBirth": "2000-05-15",
+"contactNo": "0123456789",
+"emerganceyContactNo": "0987654321",
+"bloodGroop": "A+",
+"presentAddress": "123 Main Street, Springfield",
+"permanentAddress": "456 Elm Street, Springfield",
+"guardian": {
+"fatherName": "Robert Doe",
+"fatherOccupation": "Engineer",
+"fatherContactNo": "01122334455",
+"motherName": "Jane Doe",
+"motherOccupation": "Teacher",
+"motherContactNo": "01155667788"
+},
+"localGuardian": {
+"name": "Uncle Ben",
+"occupation": "Businessman",
+"contactNo": "02233445566",
+"address": "789 Oak Street, Springfield"
+},
+"admissionSemester": "674f9b2bd0651220cc430c11",
+"profileImage": "https://example.com/profile-image.jpg"
+}
+
 # http://localhost:5000/api/v1/academic-semester/create
 
 {

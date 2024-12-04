@@ -1,4 +1,3 @@
-
 import express, { RequestHandler } from 'express'
 import { z } from 'zod'
 import sendResponse from '../../utils/sendResponse'
@@ -7,7 +6,9 @@ import catchAsync from '../../utils/catchAsync'
 import { AcademicDepartmentService } from './academicDepartment.service'
 
 const createAcademicDepartment = catchAsync(async (req, res, next) => {
-  const result = await AcademicDepartmentService.createAcademicDepartmentFromDB(req.body)
+  const result = await AcademicDepartmentService.createAcademicDepartmentFromDB(
+    req.body,
+  )
   // utility response function
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -28,13 +29,14 @@ const getAcademicDepartment = catchAsync(async (req, res, next) => {
 })
 
 const getSingleAcademicDepartment = catchAsync(async (req, res, next) => {
-  const result = await AcademicDepartmentService.getSingleAcademicDepartmentFromDB(
-    req.params.id,
-  )
+  const result =
+    await AcademicDepartmentService.getSingleAcademicDepartmentFromDB(
+      req.params.id,
+    )
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Single Academic Department is Get Successfully!',
+    message: 'Single Academic Department is Successfully!',
     data: result,
   })
 })
@@ -53,8 +55,8 @@ const updateAcademicDepartment = catchAsync(async (req, res, next) => {
 })
 
 export const AcademicDepartmentController = {
-    createAcademicDepartment,
-    getAcademicDepartment,
-    getSingleAcademicDepartment,
-    updateAcademicDepartment
+  createAcademicDepartment,
+  getAcademicDepartment,
+  getSingleAcademicDepartment,
+  updateAcademicDepartment,
 }

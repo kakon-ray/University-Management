@@ -1,5 +1,11 @@
 ### All api and request json data
 
+# http://localhost:5000/api/v1/students/student-get
+
+# http://localhost:5000/api/v1/students/2024020001 // delete request
+
+# http://localhost:5000/api/v1/students/67507059b0171e1fc4adb092
+
 # http://localhost:5000/api/v1/users/create-student
 
 {
@@ -35,6 +41,8 @@
 "profileImage": "https://example.com/profile-image.jpg"
 }
 
+### Academic Semester
+
 # http://localhost:5000/api/v1/academic-semester/create
 
 {
@@ -59,10 +67,12 @@
 
 # http://localhost:5000/api/v1/academic-semester/get/674f83da735221c8085f0a38
 
+### Academic Faculty
+
 # http://localhost:5000/api/v1/academic-faculty/create
 
 {
-  "name": "John Doe"
+"name": "John Doe"
 }
 
 # http://localhost:5000/api/v1/academic-faculty/get
@@ -72,7 +82,25 @@
 # {{ph-local-url}}/academic-faculty/update/675014aa751883d502ec975a
 
 {
-  "name": "John Doe"
+"name": "John Doe"
 }
 
+### Academic Department
 
+# http://localhost:5000/api/v1/academic-department/get
+
+# http://localhost:5000/api/v1/academic-department/create
+
+{
+"name": "John Doe",
+"academicfaculty": "67500d26d9bf0f4b2c9cc218"
+}
+
+# http://localhost:5000/api/v1/academic-department/get/67502d3f1ed03efdd647a86e
+
+# http://localhost:5000/api/v1/academic-department/update/67502d3f1ed03efdd647a86e (Patch Request)
+
+{
+"name": "Kakon",
+"academicfaculty": "675014aa751883d502ec975a"
+}

@@ -4,6 +4,7 @@ import { TStudent } from './student.interface'
 import mongoose from 'mongoose'
 import AppError from '../../errors/AppError'
 import { User } from '../users/user.model'
+import { object } from 'zod'
 
 const getAllStudentFromDB = async () => {
   const result = await Student.find({})
@@ -21,7 +22,7 @@ const getAllStudentFromDB = async () => {
 const getSingleStudentFromDB = async (studentId: string) => {
   // const result = await Student.findOne({ id: studentId })
 
-  const result = await Student.findById(studentId)
+  const result = await Student.findOne({ id: studentId })
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -34,6 +35,43 @@ const getSingleStudentFromDB = async (studentId: string) => {
   } else {
     console.log('Student not found')
   }
+}
+
+const updatedStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
+  const { name, guardian, localGuardian, ...remaingStudentData } = payload
+
+  const modifyedUpdatedData: Record<string, unknown> = { ...remaingStudentData }
+
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      modifyedUpdatedData[`name.${key}`] = value // name.firstName = 'Kakon'
+    }
+  }
+
+  if (guardian && Object.keys(guardian).length) {
+    for (const [key, value] of Object.entries(guardian)) {
+      modifyedUpdatedData[`guardian.${key}`] = value // name.firstName = 'Kakon'
+    }
+  }
+
+  if (localGuardian && Object.keys(localGuardian).length) {
+    for (const [key, value] of Object.entries(localGuardian)) {
+      modifyedUpdatedData[`localGuardian.${key}`] = value // name.firstName = 'Kakon'
+    }
+  }
+
+  console.log(modifyedUpdatedData)
+
+  const result = await Student.findOneAndUpdate(
+    { id: id },
+    modifyedUpdatedData,
+    {
+      new: true,
+      runValidators: true,
+    },
+  )
+
+  return result
 }
 
 const deleteStudentFromDB = async (studentId: string) => {
@@ -58,7 +96,7 @@ const deleteStudentFromDB = async (studentId: string) => {
     )
 
     if (!deletedUser) {
-      throw new AppError(400, 'Faild to deleted user')
+      throw new AppError(400, 'Faild to deleted Student')
     }
 
     await session.commitTransaction()
@@ -67,6 +105,7 @@ const deleteStudentFromDB = async (studentId: string) => {
   } catch (err) {
     await session.abortTransaction()
     await session.endSession()
+    throw new AppError(400, 'Faild Deleted Student')
   }
 }
 
@@ -74,4 +113,5 @@ export const StudentServices = {
   getAllStudentFromDB,
   getSingleStudentFromDB,
   deleteStudentFromDB,
+  updatedStudentFromDB,
 }

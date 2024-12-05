@@ -16,7 +16,7 @@
 "lastName": "Doe"
 },
 "gender": "male",
-"email": "john.doe@example.com",
+"email": "john.doe3@example.com",
 "dateOfBirth": "2000-05-15",
 "contactNo": "0123456789",
 "emerganceyContactNo": "0987654321",
@@ -37,7 +37,8 @@
 "contactNo": "02233445566",
 "address": "789 Oak Street, Springfield"
 },
-"admissionSemester": "674fa6c991902589735b3556",
+"admissionSemester": "674fe1db79eda92c6f1458e0",
+"academicDepartment": "67502d8f7fa34ea8457115ec",
 "profileImage": "https://example.com/profile-image.jpg"
 }
 

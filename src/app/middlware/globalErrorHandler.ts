@@ -9,7 +9,7 @@ const globalErrorHandler : ErrorRequestHandler = (
   req,
   res,
   next,
-) => {
+): void => {
   let statusCode = err.statusCode || 500
   let message = err?.message || 'An unexpected error occurred!'
 
@@ -48,7 +48,7 @@ const globalErrorHandler : ErrorRequestHandler = (
   }
 
   // console.error(err)
-  return res.status(statusCode).json({
+   res.status(statusCode).json({
     success: false,
     message,
     errorSources,

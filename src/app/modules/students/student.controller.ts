@@ -13,7 +13,7 @@ const getAllStudents = catchAsync(async (req, res, next) => {
   const result = await StudentServices.getAllStudentFromDB()
   res.status(200).json({
     success: true,
-    message: 'Student is Get Successfully!',
+    message: 'Students are Get Successfully!',
     data: result,
   })
 })
@@ -41,6 +41,7 @@ const deleteStudents = catchAsync(async (req, res, next) => {
 const updateStudents: RequestHandler = catchAsync(async (req, res, next) => {
   const studentId = req.params.studentId
   const { student } = req.body
+
   const result = await StudentServices.updatedStudentFromDB(studentId, student)
   sendResponse(res, {
     statusCode: StatusCodes.OK,

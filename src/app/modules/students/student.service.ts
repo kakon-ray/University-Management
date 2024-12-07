@@ -38,6 +38,11 @@ const getSingleStudentFromDB = async (studentId: string) => {
 }
 
 const updatedStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
+
+  if (!payload) {
+    throw new AppError(400,'Payload is undefined or null');
+  }
+
   const { name, guardian, localGuardian, ...remaingStudentData } = payload
 
   const modifyedUpdatedData: Record<string, unknown> = { ...remaingStudentData }

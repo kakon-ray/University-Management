@@ -1,10 +1,17 @@
 ### All api and request json data
 
-# http://localhost:5000/api/v1/students/student-get
+# http://localhost:5000/api/v1/students
 
-# http://localhost:5000/api/v1/students/2024020001 // delete request
+# http://localhost:5000/api/v1/students/2024020001 // delete request use id
 
-# http://localhost:5000/api/v1/students/67507059b0171e1fc4adb092
+# http://localhost:5000/api/v1/students/67507059b0171e1fc4adb092 //get single student use id
+
+# http://localhost:5000/api/v1/students/2024020001 //update student use id
+{
+    "student":{
+          "email": "kaonray.cse@gmail.com"
+    }
+}
 
 # http://localhost:5000/api/v1/users/create-student
 

@@ -19,6 +19,8 @@ const testRoute = (req: Request, res: Response) => {
     success: true,
     message: 'Done',
   })
+
+  // Promise.reject()
 }
 app.get('/', testRoute)
 

@@ -1,13 +1,16 @@
 import express, { NextFunction, Request, Response } from 'express'
 import validateRequest from '../../middlware/validateRequest'
-import { createAcademicDepartmentSchema, updateAcademicDepartmentSchema } from './academicDepartment.validation'
+import {
+  createAcademicDepartmentSchema,
+  updateAcademicDepartmentSchema,
+} from './academicDepartment.validation'
 import { AcademicDepartmentController } from './academicDepartment.controller'
 
 const router = express.Router()
 
 router.post(
   '/create',
-  validateRequest(createAcademicDepartmentSchema),
+  // validateRequest(createAcademicDepartmentSchema),
   AcademicDepartmentController.createAcademicDepartment,
 )
 

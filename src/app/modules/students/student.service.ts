@@ -6,8 +6,16 @@ import AppError from '../../errors/AppError'
 import { User } from '../users/user.model'
 import { object } from 'zod'
 
-const getAllStudentFromDB = async () => {
-  const result = await Student.find({})
+const getAllStudentFromDB = async (query: Record<string, unknown>) => {
+  let searchTerm = ''
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string
+  }
+  const result = await Student.find({
+    $or: ['email', 'name.firstName', 'presentAddress'].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  })
     .populate('admissionSemester')
     .populate({
       path: 'academicDepartment',
@@ -38,9 +46,8 @@ const getSingleStudentFromDB = async (studentId: string) => {
 }
 
 const updatedStudentFromDB = async (id: string, payload: Partial<TStudent>) => {
-
   if (!payload) {
-    throw new AppError(400,'Payload is undefined or null');
+    throw new AppError(400, 'Payload is undefined or null')
   }
 
   const { name, guardian, localGuardian, ...remaingStudentData } = payload

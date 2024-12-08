@@ -10,7 +10,7 @@ import { StatusCodes } from 'http-status-codes'
 import sendResponse from '../../utils/sendResponse'
 
 const getAllStudents = catchAsync(async (req, res, next) => {
-  const result = await StudentServices.getAllStudentFromDB()
+  const result = await StudentServices.getAllStudentFromDB(req.query)
   res.status(200).json({
     success: true,
     message: 'Students are Get Successfully!',

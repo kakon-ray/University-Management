@@ -4,13 +4,30 @@
 
 # http://localhost:5000/api/v1/students/2024020001 // delete request use id
 
+<!-- How to do raw filtering ,sorting and limiting start -->
+
+# http://localhost:5000/api/v1/students?limit=1
+
+# http://localhost:5000/api/v1/students?page=1&limit=1
+
+# http://localhost:5000/api/v1/students?searchTerm=Kakon&email=kaonray.cse@gmail.com
+
+# http://localhost:5000/api/v1/students?fields=name,email
+
+# http://localhost:5000/api/v1/students?sort=name,dateOfBirth
+
+# http://localhost:5000/api/v1/students?fields=name,email&page=1&limit=2
+
+<!-- How to do raw filtering ,sorting and limiting end -->
+
 # http://localhost:5000/api/v1/students/67507059b0171e1fc4adb092 //get single student use id
 
 # http://localhost:5000/api/v1/students/2024020001 //update student use id
+
 {
-    "student":{
-          "email": "kaonray.cse@gmail.com"
-    }
+"student":{
+"email": "kaonray.cse@gmail.com"
+}
 }
 
 # http://localhost:5000/api/v1/users/create-student
@@ -77,17 +94,17 @@
 
 ### Academic Faculty
 
-# http://localhost:5000/api/v1/academic-faculty/create
+# http://localhost:5000/api/v1/academic-faculty/create-faculty
 
 {
-"name": "John Doe"
+"name":"Kakon 2"
 }
 
 # http://localhost:5000/api/v1/academic-faculty/get
 
 # http://localhost:5000/api/v1/academic-faculty/get/67500d26d9bf0f4b2c9cc218
 
-# {{ph-local-url}}/academic-faculty/update/675014aa751883d502ec975a
+# http://localhost:5000/api/v1/academic-faculty/update/F-0001
 
 {
 "name": "John Doe"
@@ -112,3 +129,43 @@
 "name": "Kakon",
 "academicfaculty": "675014aa751883d502ec975a"
 }
+
+# Faculty Routes
+
+## http://localhost:5000/api/v1/users/create-faculty
+
+{
+
+    "password": "securePass123",
+    "faculty": {
+      "designation": "Professor",
+      "name": {
+        "firstName": "Dddd dfgs",
+        "middleName": "A.asdf",
+        "lastName": "Dddfasd"
+      },
+      "gender": "male",
+      "dateOfBirth": "1980-01-15",
+      "email": "john44a4sdf.doe@example.com",
+      "contactNo": "1234567890",
+      "emergencyContactNo": "0987654321",
+      "bloodGroup": "A+",
+      "presentAddress": "123 Main Street, Cityville",
+      "permanentAddress": "456 Elm Street, Hometown",
+      "academicDepartment": "63f76c9c2f1b4c6f7a3f0b23",
+      "profileImg": "https://example.com/images/john_doe.png"
+    }
+
+}
+
+## http://localhost:5000/api/v1/faculty
+
+<!-- single faculty -->
+
+## http://localhost:5000/api/v1/faculty/F-0002
+
+<!-- delete -->
+
+## http://localhost:5000/api/v1/faculty/F-0002
+
+## http://localhost:5000/api/v1/faculty?page=1&limit=2

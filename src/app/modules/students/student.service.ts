@@ -5,25 +5,100 @@ import mongoose from 'mongoose'
 import AppError from '../../errors/AppError'
 import { User } from '../users/user.model'
 import { object } from 'zod'
+import QueryBuilder from '../../builder/QueryBuilder'
+import { studentSerachableFields } from './students.constant'
 
+// this is row query
+// const getAllStudentFromDB = async (query: Record<string, unknown>) => {
+//   const queryObj = { ...query }
+//   const studentSerachableFields = ['email', 'name.firstName', 'presentAddress']
+//   let searchTerm = ''
+
+//   if (query?.searchTerm) {
+//     searchTerm = query?.searchTerm as string
+//   }
+
+//   const searchQuery = Student.find({
+//     $or: studentSerachableFields.map((field) => ({
+//       [field]: { $regex: searchTerm, $options: 'i' },
+//     })),
+//   })
+
+//   // Filtering
+
+//   const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields']
+//   excludeFields.forEach((el) => delete queryObj[el])
+
+//   const filterQuery = searchQuery
+//     .find(queryObj)
+//     .populate('admissionSemester')
+//     .populate({
+//       path: 'academicDepartment',
+//       populate: {
+//         path: 'academicfaculty',
+//       },
+//     })
+
+//   let sort = '-createdAt'
+
+//   if (query.sort) {
+//     sort = query.sort as string
+//   }
+
+//   const sortedQuery = filterQuery.sort(sort)
+
+//   let limit = 1
+//   let page = 1
+//   let skip = 0
+
+//   if (query.limit) {
+//     limit = Number(query.limit)
+//   }
+
+//   if (query.page) {
+//     page = Number(query.page)
+//     skip = (page - 1) * limit
+//   }
+
+//   const paginateQuery = sortedQuery.skip(skip)
+
+//   const limitQuery = paginateQuery.limit(limit)
+
+//   // fields: 'name,email'
+//   // fields:'name email' // we need
+
+//   let fields = '-__v'
+//   if (query.fields) {
+//     fields = (query.fields as string).split(',').join(' ')
+//     console.log({ fields })
+//   }
+
+//   const fieldsQuery = await limitQuery.select(fields)
+
+//   return fieldsQuery
+// }
+
+// this is professional query builder
 const getAllStudentFromDB = async (query: Record<string, unknown>) => {
-  let searchTerm = ''
-  if (query?.searchTerm) {
-    searchTerm = query?.searchTerm as string
-  }
-  const result = await Student.find({
-    $or: ['email', 'name.firstName', 'presentAddress'].map((field) => ({
-      [field]: { $regex: searchTerm, $options: 'i' },
-    })),
-  })
-    .populate('admissionSemester')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicfaculty',
-      },
-    })
+  const studentQuery = new QueryBuilder(
+    Student.find()
+      .populate('admissionSemester')
+      .populate({
+        path: 'academicDepartment',
+        populate: {
+          path: 'academicfaculty',
+        },
+      }),
+    query,
+  )
+    .search(studentSerachableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields()
 
+  const result = await studentQuery.modelQuery
+  // const result = await Student.find({})
   return result
 }
 

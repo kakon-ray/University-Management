@@ -6,10 +6,16 @@ import { TStudent } from '../students/student.interface'
 import { Student } from '../students/student.model'
 import { NewUser, TUser } from './user.interface'
 import { User } from './user.model'
-import { generateFacultyId, generateStudentId } from './user.utils'
+import {
+  generateAdminId,
+  generateFacultyId,
+  generateStudentId,
+} from './user.utils'
 import AppError from '../../errors/AppError'
 import { Faculty } from '../faculty/faculty.model'
 import { TFaculty } from '../faculty/faculty.interface'
+import { Admin } from '../admin/admin.model'
+import { TAdmin } from '../admin/admin.interface'
 
 const createStudentIntoDB = async (studentData: TStudent) => {
   // find academic semester info
@@ -90,8 +96,46 @@ const createFacultyFromDB = async (password: string, facultyData: TFaculty) => {
     throw new AppError(400, 'Faild to create user')
   }
 }
+const createAdminFromDB = async (password: string, adminData: TAdmin) => {
+  const userData: Partial<TUser> = {
+    password: password || (config.default_password as string),
+    role: 'admin',
+    id: await generateAdminId(),
+  }
+
+  const session = await mongoose.startSession()
+
+  try {
+    session.startTransaction()
+    const [newUser] = await User.create([userData], { session })
+    if (!newUser) {
+      throw new AppError(400, 'Admin creation failed')
+    }
+
+    adminData.id = newUser.id
+    adminData.user = newUser._id
+
+    const [newAdmin] = await Admin.create([adminData], {
+      session,
+    })
+
+    if (!newAdmin) {
+      throw new AppError(400, 'Admin creation failed')
+    }
+    await session.commitTransaction()
+    await session.endSession()
+    return newAdmin
+  } catch (err) {
+    if (err instanceof Error) {
+      await session.abortTransaction()
+      await session.endSession()
+      throw new AppError(400, `Failed to create admin: ${err.message}`)
+    }
+  }
+}
 
 export const UserServices = {
   createStudentIntoDB,
   createFacultyFromDB,
+  createAdminFromDB,
 }

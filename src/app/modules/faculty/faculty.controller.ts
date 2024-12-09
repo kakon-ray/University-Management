@@ -40,9 +40,9 @@ const deleteFaculty = catchAsync(async (req, res, next) => {
 
 const updateFaculty: RequestHandler = catchAsync(async (req, res, next) => {
   const studentId = req.params.studentId
-  const { student } = req.body
+  const { faculty } = req.body
 
-  const result = await FacultyServices.updatedFacultyFromDB(studentId, student)
+  const result = await FacultyServices.updatedFacultyFromDB(studentId, faculty)
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,

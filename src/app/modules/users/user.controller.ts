@@ -17,6 +17,7 @@ const createStudent = catchAsync(async (req, res, next) => {
     data: result,
   })
 })
+
 const createFaculty = catchAsync(async (req, res, next) => {
   const { password, faculty: facultyData } = req.body
   const result = await UserServices.createFacultyFromDB(password, facultyData)
@@ -29,7 +30,20 @@ const createFaculty = catchAsync(async (req, res, next) => {
   })
 })
 
+const createAdmin = catchAsync(async (req, res, next) => {
+  const { password, admin: adminData } = req.body
+  const result = await UserServices.createAdminFromDB(password, adminData)
+  // utility response function
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Admin Created Successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   createStudent,
   createFaculty,
+  createAdmin,
 }

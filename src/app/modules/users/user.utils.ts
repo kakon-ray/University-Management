@@ -1,4 +1,5 @@
 import { TAcademicSemester } from '../academicSemester/academicSemester.interface'
+import { Admin } from '../admin/admin.model'
 import { Faculty } from '../faculty/faculty.model'
 import { User } from './user.model'
 
@@ -59,6 +60,26 @@ export const generateFacultyId = async () => {
     result = `${prefix}-${incrementedNumber}`
   } else {
     result = 'F-0001'
+  }
+
+  return result
+}
+export const generateAdminId = async () => {
+  let result: string
+  const academicFaculty = await User.findOne().sort({
+    createdAt: -1,
+  })
+
+  if (academicFaculty) {
+    const [prefix, facultyId] = academicFaculty.id.split('-')
+    const incrementedNumber = String(parseInt(facultyId) + 1).padStart(
+      facultyId.length,
+      '0',
+    )
+
+    result = `${prefix}-${incrementedNumber}`
+  } else {
+    result = 'A-0001'
   }
 
   return result

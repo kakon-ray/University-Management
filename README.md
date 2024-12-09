@@ -169,3 +169,53 @@
 ## http://localhost:5000/api/v1/faculty/F-0002
 
 ## http://localhost:5000/api/v1/faculty?page=1&limit=2
+
+<!--  ======================= Admin Routes ======================-->
+
+## http://localhost:5000/api/v1/users/create-admin
+
+{
+
+    "password": "adminSecurePass123",
+    "admin": {
+      "designation": "Superintendent",
+      "name": {
+        "firstName": "John d",
+        "middleName": "A.",
+        "lastName": "Doe"
+      },
+      "gender": "male",
+      "dateOfBirth": "1985-05-15",
+      "email": "jodhsn.ddoe@example.com",
+      "contactNo": "1234567890",
+      "emergencyContactNo": "0987654321",
+      "bloodGroup": "O+",
+      "presentAddress": "123 Main Street, Cityville",
+      "permanentAddress": "456 Elm Street, Hometown",
+      "profileImg": "https://example.com/images/john_doe_profile.png"
+    }
+
+}
+
+## http://localhost:5000/api/v1/admin
+
+## http://localhost:5000/api/v1/admin/A-0001
+
+<!-- update admin -->
+
+## http://localhost:5000/api/v1/admin/A-0001
+
+{
+
+    "admin": {
+      "designation": "Engineer",
+      "name": {
+        "firstName": "Kakon",
+        "middleName": "A.",
+        "lastName": "Doe"
+      }
+    }
+
+}
+
+## http://localhost:5000/api/v1/admin/A-0001

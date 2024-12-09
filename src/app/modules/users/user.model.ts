@@ -11,7 +11,7 @@ const userSchema = new Schema<TUser>(
       required: [true, 'Password is required'],
     },
     needsPasswordChange: { type: Boolean, default: true },
-    role: { type: String, enum: ['student', 'user', 'faculty'] },
+    role: { type: String, enum: ['student', 'user', 'faculty', 'admin'] },
     status: {
       type: String,
       enum: ['in-progress', 'blocked'],

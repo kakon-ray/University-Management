@@ -241,7 +241,26 @@
 }
 
 ## http://localhost:5000/api/v1/course
+<!-- get single course -->
 ## http://localhost:5000/api/v1/course/6757e40eb21dd10ed04dada2
 
 <!-- course delete -->
 ## http://localhost:5000/api/v1/course/6757e3e1b21dd10ed04dada0
+
+
+<!-- course update -->
+## http://localhost:5000/api/v1/course/675829bcb1fcfcad9eeaf2c8
+
+{
+    "course": {
+        "title": "Full Stack Web Developement",
+        "prefix": "CS",
+        "code": 343,
+        "preRequisiteCourses": [
+            {
+                "course": "675828c1b1fcfcad9eeaf2b7",
+                "isDeleted": false
+            }
+        ]
+    }
+}

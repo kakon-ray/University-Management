@@ -219,3 +219,29 @@
 }
 
 ## http://localhost:5000/api/v1/admin/A-0001
+
+
+<!-- ============ Course Route ================ -->
+## http://localhost:5000/api/v1/course/create
+
+{
+    "course": {
+        "title": "Introduction to Programming",
+        "prefix": "CS",
+        "code": 101,
+        "credits": 3,
+        "preRequisiteCourses": [
+            {
+                "course": "6757e3e1b21dd10ed04dada0",
+                "isDeleted": false
+            }
+        ],
+        "isDeleted": false
+    }
+}
+
+## http://localhost:5000/api/v1/course
+## http://localhost:5000/api/v1/course/6757e40eb21dd10ed04dada2
+
+<!-- course delete -->
+## http://localhost:5000/api/v1/course/6757e3e1b21dd10ed04dada0

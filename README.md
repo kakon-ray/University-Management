@@ -220,47 +220,66 @@
 
 ## http://localhost:5000/api/v1/admin/A-0001
 
-
 <!-- ============ Course Route ================ -->
+
 ## http://localhost:5000/api/v1/course/create
 
 {
-    "course": {
-        "title": "Introduction to Programming",
-        "prefix": "CS",
-        "code": 101,
-        "credits": 3,
-        "preRequisiteCourses": [
-            {
-                "course": "6757e3e1b21dd10ed04dada0",
-                "isDeleted": false
-            }
-        ],
-        "isDeleted": false
-    }
+"course": {
+"title": "Introduction to Programming",
+"prefix": "CS",
+"code": 101,
+"credits": 3,
+"preRequisiteCourses": [
+{
+"course": "6757e3e1b21dd10ed04dada0",
+"isDeleted": false
+}
+],
+"isDeleted": false
+}
 }
 
 ## http://localhost:5000/api/v1/course
+
 <!-- get single course -->
+
 ## http://localhost:5000/api/v1/course/6757e40eb21dd10ed04dada2
 
 <!-- course delete -->
+
 ## http://localhost:5000/api/v1/course/6757e3e1b21dd10ed04dada0
 
-
 <!-- course update -->
+
 ## http://localhost:5000/api/v1/course/675829bcb1fcfcad9eeaf2c8
 
 {
-    "course": {
-        "title": "Full Stack Web Developement",
-        "prefix": "CS",
-        "code": 343,
-        "preRequisiteCourses": [
-            {
-                "course": "675828c1b1fcfcad9eeaf2b7",
-                "isDeleted": false
-            }
-        ]
-    }
+"course": {
+"title": "Full Stack Web Developement",
+"prefix": "CS",
+"code": 343,
+"preRequisiteCourses": [
+{
+"course": "675828c1b1fcfcad9eeaf2b7",
+"isDeleted": false
+}
+]
+}
+}
+
+<!-- put request -->
+
+## http://localhost:5000/api/v1/course/675829bcb1fcfcad9eeaf2c8/assign-faculties
+
+{
+"faculties":["675730b86d68eb73bbca691b","67572a8c1625657f3142a4d5"]
+}
+
+<!-- delete course faculty -->
+
+## http://localhost:5000/api/v1/course/675829bcb1fcfcad9eeaf2c8/remove-faculties
+
+{
+"faculties":["675730b86d68eb73bbca691b"]
 }

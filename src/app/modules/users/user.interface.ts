@@ -1,4 +1,6 @@
-export type TUser = {
+import { Model } from 'mongoose'
+
+export interface TUser {
   id: string
   password: string
   needsPasswordChange: boolean
@@ -11,4 +13,12 @@ export type NewUser = {
   password: string
   role: string
   id: string
+}
+
+export interface UserModel extends Model<TUser> {
+  isUserExistsByCustomId(id: string): Promise<TUser>
+  isPasswordMatched(
+    plainPassword: string,
+    hashPassword: string,
+  ): Promise<boolean>
 }

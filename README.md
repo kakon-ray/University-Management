@@ -322,4 +322,11 @@
   "endTime": "21:30"
 }
 
-## http://localhost:5000/api/v1/offered-course/create
+## http://localhost:5000/api/v1/offered-course/67642cde0ea024ee0157c002
+{
+
+  "faculty": "675730b86d68eb73bbca691b",
+  "days": ["Sat", "Tue"],
+  "startTime": "20:00",
+  "endTime": "21:30"
+}

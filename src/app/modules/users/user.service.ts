@@ -56,7 +56,7 @@ const createStudentIntoDB = async (studentData: TStudent) => {
   } catch (err) {
     await session.abortTransaction()
     await session.endSession()
-    throw new AppError(400, 'Faild to create user')
+    throw new AppError(400, err as string)
   }
 }
 

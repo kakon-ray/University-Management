@@ -330,3 +330,10 @@
   "startTime": "20:00",
   "endTime": "21:30"
 }
+
+## http://localhost:5000/api/v1/auth/login
+http://localhost:5000/api/v1/faculty       // test
+{
+  "id": "A-0001",
+  "password":"kakonray1234"
+}

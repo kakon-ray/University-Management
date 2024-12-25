@@ -19,11 +19,15 @@ export type NewUser = {
 }
 
 export interface UserModel extends Model<TUser> {
+  // interface method checking if the user is exists
   isUserExistsByCustomId(id: string): Promise<TUser>
+  // interface method checking if the password is changed
   isPasswordMatched(
     plainPassword: string,
     hashPassword: string,
   ): Promise<boolean>
+
+  isJwtIssuedBeforePasswordChanged(passwrodChangedTimesStamp:Date,jwtIssudeTimeStamp:number):boolean
 }
 
 export type TuserRole = keyof typeof USER_ROLE

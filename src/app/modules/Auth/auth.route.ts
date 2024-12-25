@@ -21,5 +21,11 @@ router.post(
   UserController.changePassword,
 )
 
+router.post(
+  '/refresh-token',
+  validateRequest(AuthValidation.refrechTokenValidation),
+  UserController.refrechToken,
+)
+
 export const AuthRoutes = router
 

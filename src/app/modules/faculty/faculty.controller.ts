@@ -11,6 +11,7 @@ import { FacultyServices } from './faculty.service'
 
 const getAllFaculty = catchAsync(async (req, res, next) => {
   const result = await FacultyServices.getAllFacultyFromDB(req.query)
+  console.log(req.cookies);
   res.status(200).json({
     success: true,
     message: 'Faculty are Get Successfully!',

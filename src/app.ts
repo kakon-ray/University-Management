@@ -5,13 +5,15 @@ import { UserRoutes } from './app/modules/users/user.route'
 import globalErrorHandler from './app/middlware/globalErrorHandler'
 import notFound from './app/middlware/notFound'
 import router from './app/routes'
+import cookieParser from 'cookie-parser'
 
 const app: Application = express()
 
 // parsers
 
 app.use(express.json())
-app.use(cors())
+app.use(cookieParser())
+app.use(cors({origin:['http://localhost:3000']}))
 
 // test route
 const testRoute = (req: Request, res: Response) => {

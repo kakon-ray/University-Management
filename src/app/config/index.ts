@@ -10,4 +10,7 @@ export default {
   bcrypt_solt: process.env.BCRYPT_SOLT,
   default_password: process.env.DEFAULT_PASS,
   jwt_access_secret: process.env.JWT_ACCESS_SECRET,
+  jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
+  jwt_access_expiresh_in: process.env.JWT_ACCESS_EXPIRES_IN,
+  jwt_refresh_expiresh_in: process.env.JWT_REFRESH_EXPIRES_IN,
 }

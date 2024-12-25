@@ -1,37 +1,56 @@
-import express, { RequestHandler } from 'express'
-import { z } from 'zod'
-import sendResponse from '../../utils/sendResponse'
-import { StatusCodes } from 'http-status-codes'
-import catchAsync from '../../utils/catchAsync'
-import { AuthServices } from './auth.service'
+import express, { RequestHandler } from "express";
+import { z } from "zod";
+import sendResponse from "../../utils/sendResponse";
+import { StatusCodes } from "http-status-codes";
+import catchAsync from "../../utils/catchAsync";
+import { AuthServices } from "./auth.service";
+import config from "../../config";
 
 const loginUser = catchAsync(async (req, res, next) => {
-
-  const result = await AuthServices.loginUserIntoDB(req.body)
+  const result = await AuthServices.loginUserIntoDB(req.body);
+  const { refreshToken, accessToken, needPasswordCheange } = result;
+  res.cookie("refreshToken", refreshToken, {
+    secure: config.NODE_ENV === "production",
+    httpOnly: true,
+  });
   // utility response function
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User Login Successfully',
-    data: result,
-  })
-})
+    message: "User Login Successfully",
+    data: { accessToken, needPasswordCheange },
+  });
+});
 
 const changePassword = catchAsync(async (req, res, next) => {
-
   const passwordData = req.body;
-  const result = await AuthServices.changePasswordIntoDB(req.user, passwordData)
+  const result = await AuthServices.changePasswordIntoDB(
+    req.user,
+    passwordData
+  );
   // utility response function
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'User Password Chnage Successfully',
+    message: "User Password Chnage Successfully",
     data: null,
-  })
+  });
+});
+
+const refrechToken = catchAsync(async(req, res) => {
+  const {refreshToken} = req.cookies;
+  const result = await AuthServices.reqTokenIntoDB(refreshToken);
+  // utility response function
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Refresh Token Generate Successfully",
+    data: result,
+  });
 })
 
-
 export const UserController = {
-    loginUser,
-    changePassword
-}
+  loginUser,
+  changePassword,
+  refrechToken
+};

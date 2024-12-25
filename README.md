@@ -345,3 +345,5 @@ http://localhost:5000/api/v1/faculty       // test
     "oldPassword" : "kakonray1234",
     "password": "kakonray1235"
 }
+
+## http://localhost:5000/api/v1/auth/refresh-token

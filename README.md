@@ -337,3 +337,11 @@ http://localhost:5000/api/v1/faculty       // test
   "id": "A-0001",
   "password":"kakonray1234"
 }
+
+
+## http://localhost:5000/api/v1/auth/change-password
+
+{
+    "oldPassword" : "kakonray1234",
+    "password": "kakonray1235"
+}

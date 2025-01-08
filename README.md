@@ -284,66 +284,64 @@
 "faculties":["675730b86d68eb73bbca691b"]
 }
 
-
 <!-- ============== Semester Registration =================== -->
 
 ## http://localhost:5000/api/v1/semester-registration/create
 
 {
-  "academicSemester": "674fa6c991902589735b3556",
-  "status": "UPCOMING",
-  "startDate": "2024-01-15T00:00:00Z",
-  "endDate": "2024-05-15T00:00:00Z",
-  "minCredit": 3,
-  "maxCredit": 15
+"academicSemester": "674fa6c991902589735b3556",
+"status": "UPCOMING",
+"startDate": "2024-01-15T00:00:00Z",
+"endDate": "2024-05-15T00:00:00Z",
+"minCredit": 3,
+"maxCredit": 15
 }
 
 ## http://localhost:5000/api/v1/semester-registration
 
 ## http://localhost:5000/api/v1/semester-registration/67642cde0ea024ee0157c002
 
-
-
 <!-- offered course created successfully -->
 
 ## http://localhost:5000/api/v1/offered-course/create
 
 {
-  "semesterRegistration": "67642cde0ea024ee0157c002",
-  "academicSemester": "674fa6c991902589735b3556",
-  "academicFaculty": "675721639c363f54158dbd15",
-  "academicDepartment": "675414ba9e1ce3730845937a",
-  "course": "675828c1b1fcfcad9eeaf2b7",
-  "faculty": "675730b86d68eb73bbca691b",
-  "maxCapacity": 40,
-  "section": 16,
-  "days": ["Sat", "Tue"],
-  "startTime": "20:00",
-  "endTime": "21:30"
+"semesterRegistration": "67642cde0ea024ee0157c002",
+"academicSemester": "674fa6c991902589735b3556",
+"academicFaculty": "675721639c363f54158dbd15",
+"academicDepartment": "675414ba9e1ce3730845937a",
+"course": "675828c1b1fcfcad9eeaf2b7",
+"faculty": "675730b86d68eb73bbca691b",
+"maxCapacity": 40,
+"section": 16,
+"days": ["Sat", "Tue"],
+"startTime": "20:00",
+"endTime": "21:30"
 }
 
 ## http://localhost:5000/api/v1/offered-course/67642cde0ea024ee0157c002
+
 {
 
-  "faculty": "675730b86d68eb73bbca691b",
-  "days": ["Sat", "Tue"],
-  "startTime": "20:00",
-  "endTime": "21:30"
+"faculty": "675730b86d68eb73bbca691b",
+"days": ["Sat", "Tue"],
+"startTime": "20:00",
+"endTime": "21:30"
 }
 
 ## http://localhost:5000/api/v1/auth/login
-http://localhost:5000/api/v1/faculty       // test
-{
-  "id": "A-0001",
-  "password":"kakonray1234"
-}
 
+http://localhost:5000/api/v1/faculty // test
+{
+"id": "A-0001",
+"password":"kakonray1234"
+}
 
 ## http://localhost:5000/api/v1/auth/change-password
 
 {
-    "oldPassword" : "kakonray1234",
-    "password": "kakonray1235"
+"oldPassword" : "kakonray1234",
+"password": "kakonray1235"
 }
 
 ## http://localhost:5000/api/v1/auth/refresh-token

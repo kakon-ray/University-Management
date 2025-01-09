@@ -16,7 +16,7 @@ router.post(
 
 router.post(
   '/change-password',
-  auth(USER_ROLE.admin,USER_ROLE.faculty,USER_ROLE.student),
+  auth(USER_ROLE.admin, USER_ROLE.faculty, USER_ROLE.student),
   validateRequest(AuthValidation.changePasswordValidationSchema),
   UserController.changePassword,
 )
@@ -27,5 +27,10 @@ router.post(
   UserController.refrechToken,
 )
 
-export const AuthRoutes = router
+router.post(
+  '/forget-password',
+  validateRequest(AuthValidation.forgetPasswrodValidationSchema),
+  UserController.forgetPassword,
+)
 
+export const AuthRoutes = router

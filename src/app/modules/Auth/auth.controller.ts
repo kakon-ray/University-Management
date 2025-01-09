@@ -45,9 +45,21 @@ const refrechToken = catchAsync(async (req, res) => {
     data: result,
   })
 })
+const forgetPassword = catchAsync(async (req, res) => {
+  const userId = req.body.id
+  const result = await AuthServices.forgetPasswordIntoDB(userId)
+  // utility response function
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Reset Link is Generated Successfully',
+    data: result,
+  })
+})
 
 export const UserController = {
   loginUser,
   changePassword,
   refrechToken,
+  forgetPassword,
 }

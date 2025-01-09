@@ -345,3 +345,5 @@ http://localhost:5000/api/v1/faculty // test
 }
 
 ## http://localhost:5000/api/v1/auth/refresh-token
+
+## http://localhost:5000/api/v1/auth/forget-password

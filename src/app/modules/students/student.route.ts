@@ -9,22 +9,22 @@ const router = express.Router()
 
 router.get(
   '/',
-  auth(USER_ROLE.admin, USER_ROLE.student),
+  auth(USER_ROLE.admin, USER_ROLE.faculty),
   studentController.getAllStudents,
 )
 router.get(
   '/:studentId',
-  auth(USER_ROLE.admin, USER_ROLE.student),
+  auth(USER_ROLE.admin, USER_ROLE.faculty),
   studentController.getSingleStudents,
 )
 router.delete(
   '/:studentId',
-  auth(USER_ROLE.admin, USER_ROLE.student),
+  auth(USER_ROLE.admin),
   studentController.deleteStudents,
 )
 router.patch(
   '/:studentId',
-  auth(USER_ROLE.admin, USER_ROLE.student),
+  auth(USER_ROLE.admin),
   validateRequest(updateStudentValidationSchema),
   studentController.updateStudents,
 )

@@ -121,7 +121,7 @@ const changePasswordIntoDB = async (
   return newHashPassword
 }
 
-const reqTokenIntoDB = async (token: string) => {
+const refressTokenIntoDB = async (token: string) => {
   const decoded = jwt.verify(
     token,
     config.jwt_refresh_secret as string,
@@ -209,15 +209,72 @@ const forgetPasswordIntoDB = async (userId: string) => {
     '20m',
   )
 
-  const resetUiLink = `${config.reset_password_link}?id=${user?.id}&=${resetToken}`
+  const resetUiLink = `${config.reset_password_link}?id=${user?.id}&token=${resetToken}`
 
-  sendEmail(user.email,resetUiLink)
+  sendEmail(user.email, resetUiLink)
+}
 
+const resetPasswordIntoDB = async (
+  payload: { id: string; newPassword: string },
+  token: string,
+) => {
+  const user = await User.isUserExistsByCustomId(payload?.id)
+
+  // checking if the user not found
+  if (!user) {
+    throw new AppError(
+      400,
+      'User does not exists                                                                                                                                                                   ',
+    )
+  }
+
+  // checking if the admin is soft deleted
+  if (user?.isDeleted) {
+    throw new AppError(400, 'The User is Deleted')
+  }
+
+  // checking if the user is blocked
+  if (user?.status == 'blocked') {
+    throw new AppError(400, 'The user is blocked')
+  }
+
+  const decoded = jwt.verify(
+    token,
+    config.jwt_access_secret as string,
+  ) as JwtPayload
+
+  const { userId, role, iat } = decoded
+
+  if (userId !== payload?.id) {
+    throw new AppError(httpStatus.FORBIDDEN, 'The user is not valid user')
+  }
+
+  // hash new password
+
+  const newHashPassword = await bcrypt.hash(
+    payload?.newPassword,
+    Number(config.bcrypt_solt),
+  )
+
+  const result = await User.findOneAndUpdate(
+    {
+      id: userId,
+      role: role,
+    },
+    {
+      password: newHashPassword,
+      needsPasswordChange: false,
+      passwordChnageAt: new Date(),
+    },
+  )
+
+  return result
 }
 
 export const AuthServices = {
   loginUserIntoDB,
   changePasswordIntoDB,
-  reqTokenIntoDB,
+  refressTokenIntoDB,
   forgetPasswordIntoDB,
+  resetPasswordIntoDB,
 }

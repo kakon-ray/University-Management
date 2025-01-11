@@ -18,7 +18,7 @@ const loginUser = catchAsync(async (req, res, next) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'User Login Successfully',
-    data: { accessToken, refreshToken, needPasswordCheange },
+    data: { accessToken },
   })
 })
 
@@ -36,7 +36,7 @@ const changePassword = catchAsync(async (req, res, next) => {
 
 const refrechToken = catchAsync(async (req, res) => {
   const { refreshToken } = req.cookies
-  const result = await AuthServices.reqTokenIntoDB(refreshToken)
+  const result = await AuthServices.refressTokenIntoDB(refreshToken)
   // utility response function
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -57,9 +57,26 @@ const forgetPassword = catchAsync(async (req, res) => {
   })
 })
 
+const resetPassword = catchAsync(async (req, res) => {
+  const token = req.headers.authorization
+  if (!token) {
+    throw new Error('Authorization token is missing')
+  }
+
+  const result = await AuthServices.resetPasswordIntoDB(req.body, token)
+  // utility response function
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Your New Password Saved',
+    data: {},
+  })
+})
+
 export const UserController = {
   loginUser,
   changePassword,
   refrechToken,
   forgetPassword,
+  resetPassword,
 }

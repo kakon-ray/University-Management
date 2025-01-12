@@ -42,7 +42,7 @@ const refrechToken = catchAsync(async (req, res) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Refresh Token Generate Successfully',
-    data: result,
+    data: { accessToken: result },
   })
 })
 const forgetPassword = catchAsync(async (req, res) => {

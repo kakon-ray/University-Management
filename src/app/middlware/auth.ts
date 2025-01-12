@@ -8,6 +8,7 @@ import config from '../config'
 import { TuserRole } from '../modules/users/user.interface'
 import { User } from '../modules/users/user.model'
 import { Admin } from '../modules/admin/admin.model'
+import { verifyToken } from '../modules/Auth/auth.utils'
 
 const auth = (...requiredRoles: TuserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -19,11 +20,9 @@ const auth = (...requiredRoles: TuserRole[]) => {
     }
 
     let decoded
+
     try {
-      decoded = jwt.verify(
-        token,
-        config.jwt_access_secret as string,
-      ) as JwtPayload
+      decoded = verifyToken(token, config.jwt_access_secret as string)
     } catch (err) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized')
     }

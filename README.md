@@ -346,4 +346,17 @@ http://localhost:5000/api/v1/faculty // test
 
 ## http://localhost:5000/api/v1/auth/refresh-token
 
-## http://localhost:5000/api/v1/auth/forget-password
+
+# Forget Password
+ http://localhost:5000/api/v1/auth/forget-password
+
+ {
+    "id":"A-0001"
+}
+
+ http://localhost:5000/api/v1/auth/reset-password
+
+ {
+    "id":"A-0001",
+    "newPassword":"kakonray2000"
+}

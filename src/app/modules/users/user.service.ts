@@ -16,6 +16,8 @@ import { Faculty } from '../faculty/faculty.model'
 import { TFaculty } from '../faculty/faculty.interface'
 import { Admin } from '../admin/admin.model'
 import { TAdmin } from '../admin/admin.interface'
+import { verifyToken } from '../Auth/auth.utils'
+import { USER_ROLE } from './user.constant'
 
 const createStudentIntoDB = async (studentData: TStudent) => {
   // find academic semester info
@@ -98,6 +100,7 @@ const createFacultyFromDB = async (password: string, facultyData: TFaculty) => {
     throw new AppError(400, 'Faild to create user')
   }
 }
+
 const createAdminFromDB = async (password: string, adminData: TAdmin) => {
   const userData: Partial<TUser> = {
     password: password || (config.default_password as string),
@@ -137,8 +140,29 @@ const createAdminFromDB = async (password: string, adminData: TAdmin) => {
   }
 }
 
+const getMeFromDB = async (userId:string, role:string) => {
+
+    let result = null;
+    if(role === USER_ROLE.admin){
+      result = await Admin.findOne({id:userId});
+    }
+
+    if(role === USER_ROLE.faculty){
+      result = await Faculty.findOne({id:userId});
+    }
+
+    if(role === USER_ROLE.student){
+      result = await Student.findOne({id:userId});
+    }
+
+    return result
+
+
+}
+
 export const UserServices = {
   createStudentIntoDB,
   createFacultyFromDB,
   createAdminFromDB,
+  getMeFromDB
 }

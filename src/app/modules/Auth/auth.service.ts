@@ -6,7 +6,7 @@ import { User } from '../users/user.model'
 import { TLoginUser } from './auth.interface'
 import bcrypt from 'bcrypt'
 import jwt, { JwtPayload } from 'jsonwebtoken'
-import { createToken } from './auth.utils'
+import { createToken, verifyToken } from './auth.utils'
 import { sendEmail } from '../../utils/sendEmail'
 
 const loginUserIntoDB = async (payload: TLoginUser) => {
@@ -122,10 +122,7 @@ const changePasswordIntoDB = async (
 }
 
 const refressTokenIntoDB = async (token: string) => {
-  const decoded = jwt.verify(
-    token,
-    config.jwt_refresh_secret as string,
-  ) as JwtPayload
+  const decoded = verifyToken(token,config.jwt_refresh_secret as string);
 
   const { userId, iat } = decoded
 
@@ -238,10 +235,8 @@ const resetPasswordIntoDB = async (
     throw new AppError(400, 'The user is blocked')
   }
 
-  const decoded = jwt.verify(
-    token,
-    config.jwt_access_secret as string,
-  ) as JwtPayload
+
+  const decoded = verifyToken(token,config.jwt_access_secret as string);
 
   const { userId, role, iat } = decoded
 

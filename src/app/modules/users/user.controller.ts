@@ -5,6 +5,7 @@ import { UserServices } from './user.service'
 import sendResponse from '../../utils/sendResponse'
 import { StatusCodes } from 'http-status-codes'
 import catchAsync from '../../utils/catchAsync'
+import AppError from '../../errors/AppError'
 
 const createStudent = catchAsync(async (req, res, next) => {
   const student = req.body
@@ -42,8 +43,22 @@ const createAdmin = catchAsync(async (req, res, next) => {
   })
 })
 
+const getMe = catchAsync(async (req, res, next) => {
+  const {userId,role} = req.user;
+
+  const result = await UserServices.getMeFromDB(userId,role)
+  // utility response function
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Get Your Information Successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   createStudent,
   createFaculty,
   createAdmin,
+  getMe
 }

@@ -92,7 +92,8 @@ export const createStudentValidationSchema = z.object({
     password: z
       .string()
       .min(10, 'Password does not less 20 Character')
-      .max(20, 'Password does not more 20 Character'),
+      .max(20, 'Password does not more 20 Character')
+      .optional(),
     name: createUserNameValidationSchema,
     gender: z.enum(['male', 'female', 'Other'], {
       errorMap: () => ({
@@ -114,7 +115,7 @@ export const createStudentValidationSchema = z.object({
     guardian: createGuardianValidationSchema,
     localGuardian: createLocalGuardianValidationSchema,
     admissionSemester: z.string(),
-    profileImage: z.string().optional(),
+    // profileImage: z.string().optional(),
   }),
 })
 
@@ -157,7 +158,7 @@ export const updateStudentValidationSchema = z.object({
     guardian: upateGuardianValidationSchema.optional(),
     localGuardian: updateLocalGuardianValidationSchema.optional(),
     admissionSemester: z.string().optional(),
-    profileImage: z.string().optional().optional(),
+    profileImage: z.string().optional(),
   }),
 })
 

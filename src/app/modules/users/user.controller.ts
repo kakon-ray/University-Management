@@ -9,7 +9,7 @@ import AppError from '../../errors/AppError'
 
 const createStudent = catchAsync(async (req, res, next) => {
   const student = req.body
-  const result = await UserServices.createStudentIntoDB(student)
+  const result = await UserServices.createStudentIntoDB(student, req.file)
   // utility response function
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -44,9 +44,9 @@ const createAdmin = catchAsync(async (req, res, next) => {
 })
 
 const getMe = catchAsync(async (req, res, next) => {
-  const {userId,role} = req.user;
+  const { userId, role } = req.user
 
-  const result = await UserServices.getMeFromDB(userId,role)
+  const result = await UserServices.getMeFromDB(userId, role)
   // utility response function
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -56,9 +56,23 @@ const getMe = catchAsync(async (req, res, next) => {
   })
 })
 
+const changeStatus = catchAsync(async (req, res, next) => {
+  const id = req.params.id
+
+  const result = await UserServices.changeStatus(id, req.body)
+  // utility response function
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'This user is blocked successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   createStudent,
   createFaculty,
   createAdmin,
-  getMe
+  getMe,
+  changeStatus,
 }

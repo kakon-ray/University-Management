@@ -18,8 +18,9 @@ import { Admin } from '../admin/admin.model'
 import { TAdmin } from '../admin/admin.interface'
 import { verifyToken } from '../Auth/auth.utils'
 import { USER_ROLE } from './user.constant'
+import { sendImageToCloudinary } from '../../utils/sendImageCloudinary'
 
-const createStudentIntoDB = async (studentData: TStudent) => {
+const createStudentIntoDB = async (studentData: TStudent, file: any) => {
   // find academic semester info
   const academicSemester = await AcademicSemester.findById(
     studentData.admissionSemester,
@@ -30,7 +31,7 @@ const createStudentIntoDB = async (studentData: TStudent) => {
   }
   const userData: Partial<TUser> = {
     password: studentData.password || (config.default_password as string),
-    email:studentData.email,
+    email: studentData.email,
     role: 'student',
     id: await generateStudentId(academicSemester),
   }
@@ -40,6 +41,11 @@ const createStudentIntoDB = async (studentData: TStudent) => {
   try {
     session.startTransaction()
 
+    // ====================  upload file / image =====================
+    const imageName = `${studentData.name.firstName}-${userData.id}`
+
+    const imageUrl = await sendImageToCloudinary(imageName, file?.path)
+
     const [newUser] = await User.create([userData], { session })
     if (!newUser) {
       throw new AppError(400, 'User creation failed')
@@ -47,6 +53,7 @@ const createStudentIntoDB = async (studentData: TStudent) => {
 
     studentData.id = newUser.id
     studentData.user = newUser._id
+    studentData.profileImage = imageUrl?.secure_url
 
     const [newStudent] = await Student.create([studentData], { session })
 
@@ -66,7 +73,7 @@ const createStudentIntoDB = async (studentData: TStudent) => {
 const createFacultyFromDB = async (password: string, facultyData: TFaculty) => {
   const userData: Partial<TUser> = {
     password: password || (config.default_password as string),
-    email:facultyData.email,
+    email: facultyData.email,
     role: 'faculty',
     id: await generateFacultyId(),
   }
@@ -104,7 +111,7 @@ const createFacultyFromDB = async (password: string, facultyData: TFaculty) => {
 const createAdminFromDB = async (password: string, adminData: TAdmin) => {
   const userData: Partial<TUser> = {
     password: password || (config.default_password as string),
-    email:adminData.email,
+    email: adminData.email,
     role: 'admin',
     id: await generateAdminId(),
   }
@@ -140,29 +147,32 @@ const createAdminFromDB = async (password: string, adminData: TAdmin) => {
   }
 }
 
-const getMeFromDB = async (userId:string, role:string) => {
+const getMeFromDB = async (userId: string, role: string) => {
+  let result = null
+  if (role === USER_ROLE.admin) {
+    result = await Admin.findOne({ id: userId })
+  }
 
-    let result = null;
-    if(role === USER_ROLE.admin){
-      result = await Admin.findOne({id:userId});
-    }
+  if (role === USER_ROLE.faculty) {
+    result = await Faculty.findOne({ id: userId })
+  }
 
-    if(role === USER_ROLE.faculty){
-      result = await Faculty.findOne({id:userId});
-    }
+  if (role === USER_ROLE.student) {
+    result = await Student.findOne({ id: userId })
+  }
 
-    if(role === USER_ROLE.student){
-      result = await Student.findOne({id:userId});
-    }
+  return result
+}
 
-    return result
-
-
+const changeStatus = async (id: string, payload: { status: string }) => {
+  const result = User.findByIdAndUpdate(id, payload, { new: true })
+  return result
 }
 
 export const UserServices = {
   createStudentIntoDB,
   createFacultyFromDB,
   createAdminFromDB,
-  getMeFromDB
+  getMeFromDB,
+  changeStatus,
 }
